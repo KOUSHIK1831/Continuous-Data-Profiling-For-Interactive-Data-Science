@@ -1,3 +1,7 @@
+#before runnin this code follow steps
+#step 1 Run this libraries will show restart pop up as restart session
+#step 2 click on restart session and run it again
+
 # %%
 %pip uninstall -y numpy
 %pip install "numpy<=2.1.0" --force-reinstall
