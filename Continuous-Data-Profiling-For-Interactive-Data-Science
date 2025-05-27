@@ -1,8 +1,10 @@
 #before runnin this code follow steps
-#step 1 Run this libraries will show restart pop up as restart session
-#step 2 click on restart session and run it again
+#step 1 Run this Python package installations will show restart pop up as restart session
+#step 2 click on restart session and run again Python package installations
+#step 3 Again restart session pop,this time cancel it and run the Python libraries and codes
 
 # %%
+#Cell 1: Python package installations
 %pip uninstall -y numpy
 %pip install "numpy<=2.1.0" --force-reinstall
 %pip install --force-reinstall scipy numba
@@ -11,6 +13,7 @@
 !pip install ydata-profiling
 
 # %%
+#Cell 2: Python libraries
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -47,7 +50,7 @@ display(data.head(3))
 
 print("\nDATA TYPES:")
 print(data.dtypes)
-
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # %%
 # Cell 3: Initialize Continuous Data Profiler
 class ContinuousDataProfiler:
@@ -143,9 +146,9 @@ profiler.show_profile()
 print("Columns in raw data:", data.columns.tolist())
 print("\nFirst 3 rows:")
 display(data.head(3))
-
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # %%
-# Cell 4 - Bulletproof Preprocessing
+# Cell 4: Bulletproof Preprocessing
 def preprocess_data(raw_data):
     """Handle any California housing dataset format"""
     df = raw_data.copy()
@@ -176,9 +179,9 @@ def preprocess_data(raw_data):
 
 processed_data = preprocess_data(data)
 display(processed_data.head(2))
-
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # %%
-# Cell 5 - Guaranteed Feature Engineering
+# Cell 5: Guaranteed Feature Engineering
 def feature_engineering(df):
     """Will always return engineered data"""
     try:
@@ -212,7 +215,7 @@ print(f"Original data shape: {data.shape}")
 print(f"Processed data shape: {processed_data.shape}")
 print(f"Engineered data shape: {engineered_data.shape}")
 print("\nEngineered data columns:", engineered_data.columns.tolist())
-
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # %%
 # Cell 6: Model Training with Correct Target Column
 
@@ -260,7 +263,7 @@ if target_column in engineered_data.columns:
 else:
     print(f"Target column '{target_column}' not found in the dataset.")
     print("Available columns:", engineered_data.columns.tolist())
-
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # %%
 # Cell 7: Model Monitoring System
 class ModelMonitor:
@@ -350,9 +353,9 @@ if 'model' in locals():
     print(f"Drift detected: {concept_drift['drift_detected']}")
 else:
     print("Model not trained - skipping monitoring setup")
-
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # %%
-# Create a classification label from the regression target
+# Cell 8: Create a classification label from the regression target
 def categorize_price(price):
     if price < 150000:
         return 'Low'
@@ -415,9 +418,9 @@ print(f"F2 Score (Macro): {f2:.2f}")
 # Optional: Detailed Classification Report
 print("\nClassification Report:\n")
 print(classification_report(y_test, y_pred))
-
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # %%
-# Target variable
+# Cell 9: Target variable
 target = 'median_house_value'
 features = data.drop(columns=[target])
 
@@ -463,9 +466,9 @@ print("\n=== Regression Performance Metrics ===")
 print(f"Root Mean Squared Error (RMSE): {rmse:.2f}")
 print(f"Mean Absolute Error (MAE): {mae:.2f}")
 print(f"R² (Coefficient of Determination): {r2:.2f}")
-
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # %%
-# Sample model performance data (replace with your actual metrics)
+# Cell 10: Sample model performance data (replace with your actual metrics)
 models = ['Linear Regression', 'Decision Tree', 'Random Forest', 'SVR', 'Neural Network']
 metrics = {
     'Accuracy': [0.78, 0.82, 0.85, 0.79, 0.83],
@@ -494,9 +497,9 @@ plt.xticks(index + bar_width, models, rotation=45)
 plt.legend()
 plt.tight_layout()
 plt.show()
-
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # %%
-# Sample regression metrics
+# Cell 11: Sample regression metrics
 reg_metrics = {
     'R² Score': [0.78, 0.82, 0.85, 0.79, 0.83],
     'RMSE': [45000, 38000, 35000, 42000, 37000],
@@ -516,41 +519,9 @@ plt.xticks(index + bar_width, models, rotation=45)
 plt.legend()
 plt.tight_layout()
 plt.show()
-
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # %%
-# Bin the median_house_value into categories (example bins)
-bins = [0, 100000, 200000, 300000, 400000, 500000, np.inf]
-labels = ['<100k', '100-200k', '200-300k', '300-400k', '400-500k', '500k+']
-data['price_category'] = pd.cut(data['median_house_value'], bins=bins, labels=labels)
-
-# Select features and target
-X = data[['median_income', 'housing_median_age', 'population']]  # Example features
-y = data['price_category']
-
-# Split data
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-# Train a classifier
-clf = RandomForestClassifier(random_state=42)
-clf.fit(X_train, y_train)
-
-# Predictions
-y_pred = clf.predict(X_test)
-
-# Confusion matrix
-cm = confusion_matrix(y_test, y_pred, labels=labels)
-disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=labels)
-
-# Plot
-fig, ax = plt.subplots(figsize=(10, 8))
-disp.plot(ax=ax, cmap='Blues', values_format='d')
-plt.title('Confusion Matrix for Housing Price Categories')
-plt.xticks(rotation=45)
-plt.tight_layout()
-plt.show()
-
-# %%
-# Prepare data (regression version)
+# Cell 12: Prepare data (regression version)
 X = data[['median_income', 'housing_median_age', 'population']]
 y = data['median_house_value']
 
@@ -584,9 +555,9 @@ plt.ylabel('Frequency')
 plt.title('Distribution of Residuals')
 plt.grid(True)
 plt.show()
-
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # %%
-  # Cell 8: Complete Interactive Dashboard
+  # Cell 13: Complete Interactive Dashboard
 def interactive_dashboard():
     """Interactive dashboard for data exploration and model insights"""
     if 'engineered_data' not in globals():
