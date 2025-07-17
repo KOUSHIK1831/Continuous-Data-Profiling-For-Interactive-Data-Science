@@ -107,9 +107,12 @@ Additional engineered features:
 Install the required libraries using the following:
 
 ```bash
-pip install numpy==1.24.4
-pip install pandas scikit-learn matplotlib seaborn
-pip install ydata-profiling ipywidgets
+%pip uninstall -y numpy
+%pip install "numpy<=2.1.0" --force-reinstall
+%pip install --force-reinstall scipy numba
+!pip uninstall -y numpy scikit-learn
+!pip install numpy==1.24.4 scikit-learn --upgrade
+!pip install ydata-profiling
 ```
 
 If using Google Colab, also run:
