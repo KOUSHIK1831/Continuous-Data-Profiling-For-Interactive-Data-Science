@@ -1,144 +1,239 @@
-# Continuous-Data-Profiling-For-Interactive-Data-Science
+# Continuous Data Profiling for Interactive Data Science
 
-# California Housing Price Analysis
+**California Housing Price Analysis** — An end-to-end machine learning pipeline that integrates continuous data profiling, predictive modeling, drift monitoring, and interactive visualization for real-world data science workflows.
 
-This project presents a complete end-to-end machine learning pipeline for analyzing housing prices in California. It includes data profiling, preprocessing, feature engineering, model training (regression and classification), drift detection, and an interactive dashboard.
+![Python](https://img.shields.io/badge/python-3.8%2B-blue)
+![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-orange)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-1.0%2B-green)
+![Status](https://img.shields.io/badge/status-academic%20research-lightgrey)
+
+---
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Research Paper](#research-paper)
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Dataset](#dataset)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Models & Results](#models--results)
+- [Technical Details](#technical-details)
+- [Potential Improvements](#potential-improvements)
+- [License](#license)
+- [Citation](#citation)
+
+---
+
+## Overview
+
+This project demonstrates a complete data science lifecycle on the California Housing dataset. It moves beyond static model training by incorporating **continuous data profiling** — a framework for monitoring data and concept drift over time, simulating how a model would behave in a production environment.
+
+The pipeline covers:
+
+- **Data Profiling** — Automated statistical reports using `ydata-profiling`
+- **Preprocessing** — Robust handling of missing values, feature standardization (without target leakage)
+- **Feature Engineering** — Domain-specific ratio features
+- **Regression** — Random Forest and Linear Regression for price prediction
+- **Classification** — Random Forest for price category prediction (Low / Medium / High)
+- **Drift Monitoring** — KS-test for data drift; R²-based concept drift detection
+- **Interactive Dashboard** — `ipywidgets`-based UI for data exploration and model insights
+
+The work is accompanied by a research paper that discusses the methodology and implications of continuous data profiling in interactive data science environments.
+
+---
+
+## Research Paper
+
+The file `Dead or Alive Continuous Data Profiling for Interactive Data Science.pdf` contains the accompanying research paper, which provides the theoretical background, experimental design, and discussion of results.
+
+---
+
+## Features
+
+- **Continuous Data Profiler** — A reusable `ContinuousDataProfiler` class that tracks changes across dataset versions
+- **Data Leakage Prevention** — All transformations (encoding, imputation) are fit on training data only
+- **Drift-Aware Monitoring** — `ModelMonitor` class with KS-test data drift and R² concept drift detection
+- **Multi-Model Support** — Random Forest (regressor + classifier) and Linear Regression with isolated variable scopes
+- **Interactive Dashboard** — Three-tab `ipywidgets` interface: Data Explorer, Model Insights, Data Profiles
+- **Colab-Compatible** — Automatically detects local vs. Google Colab environment
+
+---
 
 ## Project Structure
 
 ```
-California_Housing_Project/
-│
-├── Special_Project.ipynb           # Main Jupyter Notebook
-├── housing.csv                     # Dataset (from Google Drive)
-├── README.md                       # Project documentation
+.
+├── Continuous-Data-Profiling-For-Interactive-Data-Science.ipynb   # Main notebook (13 cells)
+├── housing.csv                                                     # California Housing dataset
+├── Dead or Alive Continuous Data Profiling for Interactive Data Science.pdf  # Research paper
+└── README.md                                                       # Project documentation
 ```
 
-## Objective
+---
 
-To predict California housing prices and classify them into categories based on various features such as location, demographics, and property characteristics. The project also integrates monitoring and interactive tools for data exploration and model evaluation.
+## Dataset
 
-## Models Used
+The [California Housing Prices dataset](https://www.kaggle.com/datasets/camnugent/california-housing-prices) contains 20,640 observations of census block groups from the 1990 California census.
 
-**Regression**
-
-* Random Forest Regressor
-* Linear Regression
-
-**Classification**
-
-* Random Forest Classifier (to classify housing prices into Low, Medium, High)
-
-## Features Used
-
-* housing\_median\_age
-* total\_rooms
-* total\_bedrooms
-* population
-* households
-* median\_income
-* ocean\_proximity
+| Column | Description |
+|--------|-------------|
+| `longitude` / `latitude` | Geographic coordinates |
+| `housing_median_age` | Median age of houses in the block |
+| `total_rooms` / `total_bedrooms` | Room counts |
+| `population` / `households` | Demographic counts |
+| `median_income` | Median income in the block (in tens of thousands) |
+| `ocean_proximity` | Categorical: distance to the ocean |
+| `median_house_value` | **Target** — Median house value ($) |
 
 Additional engineered features:
+- `RoomsPerHousehold` — `total_rooms / households`
+- `BedroomsPerRoom` — `total_bedrooms / total_rooms`
+- `PopulationPerHousehold` — `population / households`
 
-* RoomsPerHousehold
-* BedroomsPerRoom
-* PopulationPerHousehold
+---
 
-## Workflow Overview
+## Installation
 
-1. **Data Profiling**
+### Prerequisites
 
-   * Using `ydata-profiling` to generate statistical reports
+- Python 3.8+
+- Jupyter Notebook or JupyterLab
 
-2. **Preprocessing**
-
-   * Handling missing values
-   * Normalizing numerical features
-   * Encoding categorical variables
-
-3. **Feature Engineering**
-
-   * Derived metrics from existing features to improve model performance
-
-4. **Model Training & Evaluation**
-
-   * Regression (housing value prediction)
-   * Classification (price category prediction)
-
-5. **Drift Monitoring**
-
-   * Data Drift: using KS-test
-   * Concept Drift: comparing baseline and current model R²
-
-6. **Interactive Dashboard**
-
-   * Built with `ipywidgets` for feature exploration and model insights
-
-## Evaluation Metrics
-
-### Regression
-
-| Metric   | Value (Approx.) |
-| -------- | --------------- |
-| RMSE     | 35,000 – 45,000 |
-| MAE      | 25,000 – 32,000 |
-| R² Score | 0.78 – 0.85     |
-
-### Classification
-
-| Metric   | Value (Approx.) |
-| -------- | --------------- |
-| Accuracy | \~0.85          |
-| F1 Score | \~0.83          |
-| F2 Score | \~0.81          |
-
-*Values may vary based on data splits and model tuning.*
-
-## Possible Improvements
-
-* Hyperparameter tuning (GridSearchCV)
-* Try advanced models like XGBoost or CatBoost
-* Deploy as a web app using Streamlit or Flask
-* Automate data monitoring for production usage
-
-## Requirements
-
-Install the required libraries using the following:
+### Setup
 
 ```bash
-%pip uninstall -y numpy
-%pip install "numpy<=2.1.0" --force-reinstall
-%pip install --force-reinstall scipy numba
-!pip uninstall -y numpy scikit-learn
-!pip install numpy==1.24.4 scikit-learn --upgrade
-!pip install ydata-profiling
+# Clone the repository
+git clone https://github.com/your-username/Continuous-Data-Profiling-For-Interactive-Data-Science.git
+cd Continuous-Data-Profiling-For-Interactive-Data-Science
+
+# Install dependencies (recommended: use a virtual environment)
+pip install --upgrade pip
+pip install numpy scipy numba scikit-learn ydata-profiling ipywidgets matplotlib seaborn
+
+# Launch the notebook
+jupyter notebook Continuous-Data-Profiling-For-Interactive-Data-Science.ipynb
 ```
 
-If using Google Colab, also run:
+> **Note:** The first cell handles package installation. In a Colab environment, simply run the cells in order. Locally, ensure your environment has the required packages pre-installed.
 
-```python
-from google.colab import drive
-drive.mount('/content/drive')
+---
+
+## Usage
+
+1. **Open the notebook** — Launch `Continuous-Data-Profiling-For-Interactive-Data-Science.ipynb`
+2. **Run cells sequentially** — The notebook is organized into 13 cells, each with a clear purpose:
+   - Cell 1: Package installation (skip if pre-installed)
+   - Cells 2–3: Library imports and data loading
+   - Cell 4: Continuous Data Profiler initialization
+   - Cells 5–6: Preprocessing and feature engineering
+   - Cell 7: Random Forest regression with feature importance
+   - Cell 8: Model monitoring (data + concept drift)
+   - Cell 9: Classification (Low / Medium / High)
+   - Cell 10: Linear Regression baseline
+   - Cell 11: Residual analysis
+   - Cell 12: Interactive dashboard
+3. **Explore the dashboard** — The final cell renders a tabbed UI for interactive exploration
+
+---
+
+## Models & Results
+
+### Regression — Random Forest
+
+| Metric | Value |
+|--------|-------|
+| RMSE   | ~$49,500 |
+| R²     | ~0.81 |
+
+### Regression — Linear Regression
+
+| Metric | Value |
+|--------|-------|
+| RMSE   | ~$70,000 |
+| R²     | ~0.63 |
+
+### Classification — Random Forest
+
+| Metric | Value |
+|--------|-------|
+| Accuracy | ~0.83 |
+| F1 (macro) | ~0.82 |
+| F2 (macro) | ~0.81 |
+
+*Results may vary slightly depending on random splits and library versions.*
+
+---
+
+## Technical Details
+
+### Pipeline Architecture
+
+```
+┌─────────────┐    ┌──────────────┐    ┌─────────────────┐
+│ Raw Data    │───▶│ Preprocess   │───▶│ Feature Eng.    │
+│ (housing.csv)│   │ - median fill│    │ - ratio feats  │
+│             │    │ - standardize│    │                 │
+└─────────────┘    │ (target kept │    └────────┬────────┘
+                   │  unscaled)   │             │
+                   └──────────────┘             ▼
+                                        ┌─────────────────┐
+┌────────────────┐    ┌──────────────┐    │ Train/Test     │
+│ Interactive    │◀───│ Drift Monitor│◀───│ Split +        │
+│ Dashboard      │    │ (KS-test,    │    │ One-Hot Encode │
+│                │    │  R² check)   │    │ (no leakage)   │
+└────────────────┘    └──────────────┘    └────────┬────────┘
+                                                   ▼
+                                        ┌─────────────────┐
+                                        │ Models          │
+                                        │ - RF Regressor  │
+                                        │ - Linear Reg.   │
+                                        │ - RF Classifier │
+                                        └─────────────────┘
 ```
 
-## Running the Notebook
+### Key Design Decisions
 
-1. Clone the repository:
+- **No target scaling** — Feature standardization excludes the target variable to maintain interpretability
+- **Post-split encoding** — One-hot encoding applied after `train_test_split` to prevent data leakage
+- **Isolated model scopes** — Each model uses unique variable suffixes (`_rf`, `_lr`, `_cls`) to avoid namespace collisions
+- **Test-set baseline for drift** — Concept drift compares against held-out test R² rather than optimistic training R²
+- **Fallback data loading** — Attempts local file first, then Google Drive mount for Colab users
 
-   ```bash
-   git clone https://github.com/your-username/California_Housing_Project.git
-   cd California_Housing_Project
-   ```
+---
 
-2. Launch the notebook:
+## Potential Improvements
 
-   ```bash
-   jupyter notebook Special_Project.ipynb
-   ```
+- Hyperparameter tuning (GridSearchCV / Optuna)
+- Advanced models (XGBoost, CatBoost, LightGBM)
+- Statistical parity tests for fairness evaluation
+- Web deployment (Streamlit / Flask / FastAPI)
+- Automated CI/CD pipeline for model retraining
+- Real-time drift monitoring with alerting
+- SHAP / LIME explanations in the dashboard
 
+---
 
+## License
 
-This repository contains the code, research paper for the Project
+This project is provided for academic and educational purposes.
 
-Kaggle Dataset: https://www.kaggle.com/datasets/camnugent/california-housing-prices
+---
+
+## Citation
+
+If you use this work in your research, please cite the accompanying paper:
+
+```
+@misc{continuous-data-profiling,
+  author = {Koushik},
+  title = {Dead or Alive: Continuous Data Profiling for Interactive Data Science},
+  year = {2024},
+  note = {Available as part of the project repository}
+}
+```
+
+---
+
+*Built with Python, scikit-learn, and Jupyter.*
