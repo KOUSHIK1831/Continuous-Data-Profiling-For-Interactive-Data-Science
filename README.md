@@ -124,16 +124,19 @@ jupyter notebook Continuous-Data-Profiling-For-Interactive-Data-Science.ipynb
 
 1. **Open the notebook** — Launch `Continuous-Data-Profiling-For-Interactive-Data-Science.ipynb`
 2. **Run cells sequentially** — The notebook is organized into 13 cells, each with a clear purpose:
-   - Cell 1: Package installation (skip if pre-installed)
-   - Cells 2–3: Library imports and data loading
-   - Cell 4: Continuous Data Profiler initialization
-   - Cells 5–6: Preprocessing and feature engineering
-   - Cell 7: Random Forest regression with feature importance
-   - Cell 8: Model monitoring (data + concept drift)
-   - Cell 9: Classification (Low / Medium / High)
-   - Cell 10: Linear Regression baseline
-   - Cell 11: Residual analysis
-   - Cell 12: Interactive dashboard
+    - Cell 1: Package installation (skip if pre-installed)
+    - Cell 2: Library imports
+    - Cell 3: Data loading (local or Google Drive)
+    - Cell 4: Continuous Data Profiler initialization
+    - Cell 5: Preprocessing (median fill, feature standardization, target unscaled)
+    - Cell 6: Feature engineering (ratio features)
+    - Cell 7: Debug data flow check
+    - Cell 8: Random Forest regression with feature importance
+    - Cell 9: Model monitoring (data + concept drift)
+    - Cell 10: Classification (Low / Medium / High)
+    - Cell 11: Linear Regression baseline
+    - Cell 12: Residual analysis
+    - Cell 13: Interactive dashboard
 3. **Explore the dashboard** — The final cell renders a tabbed UI for interactive exploration
 
 ---
