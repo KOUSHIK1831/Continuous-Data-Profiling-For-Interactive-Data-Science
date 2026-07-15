@@ -32,7 +32,7 @@ This project demonstrates a complete data science lifecycle on the California Ho
 
 The pipeline covers:
 
-- **Data Profiling** — Automated statistical reports using `ydata-profiling`
+- **Data Profiling** — Automated statistical summaries (shape, dtypes, missing values, describe)
 - **Preprocessing** — Robust handling of missing values, feature standardization (without target leakage)
 - **Feature Engineering** — Domain-specific ratio features
 - **Regression** — Random Forest and Linear Regression for price prediction
@@ -110,7 +110,7 @@ cd Continuous-Data-Profiling-For-Interactive-Data-Science
 
 # Install dependencies (recommended: use a virtual environment)
 pip install --upgrade pip
-pip install numpy scipy numba scikit-learn ydata-profiling ipywidgets matplotlib seaborn
+pip install numpy scipy scikit-learn ipywidgets matplotlib seaborn
 
 # Launch the notebook
 jupyter notebook Continuous-Data-Profiling-For-Interactive-Data-Science.ipynb
